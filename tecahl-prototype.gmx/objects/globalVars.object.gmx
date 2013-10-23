@@ -28,7 +28,7 @@
             <string>//this object is more of an organizational thing. Just a place
 //to initialize global variables
 global.gridSize = 48;
-global.selectedUnit = false;
+global.selectedUnit = -13;
 global.camSpeed = 10;
 </string>
           </argument>
