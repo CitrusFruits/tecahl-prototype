@@ -84,6 +84,19 @@ for(var i = 0; i &lt; array_length_1d(global.team1); i++){
 //the code for doing the AI should start here, but instead I just refresh
 // all the playable units (more for reference
 if(moveEnemy){
+    for(var i = 0; i &lt; array_length_1d(global.team2); i++) {
+        //get random coordinate distance
+        var randx = ceil(random_range(3, 5));
+        var randy = ceil(random_range(3, 5));
+        
+        //new coordinates snap to grid (48)
+        var coorX = (randx * global.gridSize);
+        var coorY = (randy * global.gridSize);
+        //new coordinate = current position + coor
+        global.team2[i].x = global.team2[i].x - coorX;
+        global.team2[i].y = global.team2[i].y - coorY;
+    }
+    //reset playable team to active
     for(var i = 0; i &lt; array_length_1d(global.team1); i++){
         global.team1[i].canMove = true;
         global.team1[i].sprite_index = global.team1[i].availableSprite;
