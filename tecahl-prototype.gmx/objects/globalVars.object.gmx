@@ -30,6 +30,7 @@
 global.gridSize = 48;
 global.selectedUnit = -13;
 global.camSpeed = 10;
+global.canSelectUnit = true;
 </string>
           </argument>
         </arguments>

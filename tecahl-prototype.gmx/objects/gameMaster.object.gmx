@@ -93,8 +93,8 @@ if(moveEnemy){
         var coorX = (randx * global.gridSize);
         var coorY = (randy * global.gridSize);
         //new coordinate = current position + coor
-        global.team2[i].x = global.team2[i].x - coorX;
-        global.team2[i].y = global.team2[i].y - coorY;
+        global.team2[i].targetX = global.team2[i].x - coorX;
+        global.team2[i].targetY = global.team2[i].y - coorY;
     }
     //reset playable team to active
     for(var i = 0; i &lt; array_length_1d(global.team1); i++){

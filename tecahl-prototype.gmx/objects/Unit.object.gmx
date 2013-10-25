@@ -3,7 +3,7 @@
   <spriteName>megaman</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>0</depth>
+  <depth>100</depth>
   <persistent>0</persistent>
   <parentName>cameraController</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -27,10 +27,42 @@
             <kind>1</kind>
             <string>self.unitId = id;
 self.canMove = true;
-self.moveRange = 8;
 self.teamNumber = 2; //ai controlled by default
 self.availableSprite = megaman;
 self.exhaustedSprite = megaman_desaturated;
+self.displayStats = false;  //whether or not to display the stats
+self.tweenSpeed = 10;
+self.targetX = x;
+self.targetY = y;
+
+//battle stats
+self.attack = 5;
+self.moveRange = 8;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="3" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>//tween to the targetX
+var distance = point_distance(x, y, self.targetX, self.targetY);
+move_towards_point(self.targetX, self.targetY, min(self.tweenSpeed, distance));
 </string>
           </argument>
         </arguments>
@@ -70,15 +102,96 @@ if(global.selectedUnit == self.unitId &amp;&amp; self.canMove){
     //check if the move is within range
     if((abs(gridIndexX-x/global.gridSize) + abs(gridIndexY-y/global.gridSize)) &lt;= self.moveRange){
         //move
-        x = newX;
-        y = newY;
+        self.targetX = newX;
+        self.targetY = newY;
+        
+        //create the menu
+        var menuOptions;
+        menuOptions[0] = "Attack";
+        menuOptions[1] = "Wait";
+        var menu = instance_create(self.targetX, self.targetY, Menu);
+        menu.menuOptionsText = menuOptions;
+        menu.sourceUnit = self;
+        
         self.canMove = false;
-        sprite_index = self.exhaustedSprite;
+        //sprite_index = self.exhaustedSprite;
     }
     
     //deselect this unit
     global.selectedUnit = false;
 }
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="6" enumb="51">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>//deselect this unit
+global.selectedUnit = false;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="6" enumb="11">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>self.displayStats = false;
+depth = 100;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="6" enumb="10">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>self.displayStats = true;
+depth = 0;  //sprite depth (bringing it to the front when the mouse is hovering)
 </string>
           </argument>
         </arguments>
@@ -102,9 +215,45 @@ if(global.selectedUnit == self.unitId &amp;&amp; self.canMove){
           <argument>
             <kind>1</kind>
             <string>//check the playable team
-if(global.playableTeam == self.teamNumber){
+if(global.playableTeam == self.teamNumber &amp;&amp; global.canSelectUnit){
     //set the selected unit to self
     global.selectedUnit = self.unitId;
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>//draw its normal sprite
+if(self.canMove)
+    draw_sprite(self.availableSprite, 0, x, y);
+else
+    draw_sprite(self.exhaustedSprite, 0, x, y);
+if(self.displayStats){
+    var dx = view_xview[0];
+    if(mouse_x &lt; view_wview[0]/2)
+        dx += view_wview[0]-sprite_get_width(stats);
+    draw_sprite(stats, -1000, dx, 0);
+    draw_text(dx, 0, "Attack: " + string(self.attack));
+    draw_sprite(stats, -1000, dx, 24);
+    draw_text(dx, 24, "MoveRange: " + string(self.moveRange));
 }
 </string>
           </argument>
