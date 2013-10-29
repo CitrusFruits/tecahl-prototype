@@ -246,6 +246,8 @@ if(self.canMove)
     draw_sprite(self.availableSprite, 0, x, y);
 else
     draw_sprite(self.exhaustedSprite, 0, x, y);
+    
+draw_set_font(font_menu);
 if(self.displayStats){
     var dx = view_xview[0];
     if(mouse_x &lt; view_wview[0]/2)
