@@ -38,12 +38,12 @@ for(var i = 0; i &lt; array_length_1d(global.team1); i++){
 }
 
 //the non playable team
-global.team2[0] = instance_create(12*global.gridSize, 12*global.gridSize, Unit);
-global.team2[1] = instance_create(13*global.gridSize, 12*global.gridSize, Warrior);
-global.team2[2] = instance_create(14*global.gridSize, 12*global.gridSize, Warrior);
-global.team2[3] = instance_create(12*global.gridSize, 13*global.gridSize, Warrior);
-global.team2[4] = instance_create(13*global.gridSize, 13*global.gridSize, Warrior);
-global.team2[5] = instance_create(14*global.gridSize, 13*global.gridSize, Unit);
+global.team2[0] = instance_create(12*global.gridSize, 12*global.gridSize, Enemy);
+global.team2[1] = instance_create(13*global.gridSize, 12*global.gridSize, Enemy);
+global.team2[2] = instance_create(14*global.gridSize, 12*global.gridSize, Enemy);
+global.team2[3] = instance_create(12*global.gridSize, 13*global.gridSize, Enemy);
+global.team2[4] = instance_create(13*global.gridSize, 13*global.gridSize, Enemy);
+global.team2[5] = instance_create(14*global.gridSize, 13*global.gridSize, Enemy);
 
 //for(var i = 0; i &lt; array_length_1d(global.team2); i++){
    // global.team2[0].teamNumber = 2;
@@ -80,24 +80,103 @@ for(var i = 0; i &lt; array_length_1d(global.team1); i++){
     if(global.team1[i].canMove)
         moveEnemy = false;
 }
-
-//the code for doing the AI should start here, but instead I just refresh
-// all the playable units (more for reference
+var isOccupiedX; //bool if a unit occupies this X coordinate
+var isOccupiedY; //bool if a unit occupies this Y coordinate
+var nearestX;   //X coordinate of nearest instance
+var nearestY;   //Y coordinate of nearest instance
+var dirX;       //X direction enemy will take
+var dirY;       //Y direction enemy will take
+var rangeX;     //X spaces enemy will move
+var rangeY;     //Y spaces enemy will move
+var coorX;      //new X coordinate
+var coorY;      //new Y coordinate
+var k;          //index k
+//enemy movement AI
 if(moveEnemy){
     for(var i = 0; i &lt; array_length_1d(global.team2); i++) {
-        //get random coordinate distance
-        var randx = ceil(random_range(3, 5));
-        var randy = ceil(random_range(3, 5));
         
-        //new coordinates snap to grid (48)
-        var coorX = (randx * global.gridSize);
-        var coorY = (randy * global.gridSize);
+        isOccupiedX = false;
+        isOccupiedY = false;
+        k = 0;
+        do {
+            k++;
+            nearestX = instance_nearest(global.team2[i].x, global.team2[i].y, Warrior).x;
+            nearestY = instance_nearest(global.team2[i].x, global.team2[i].y, Warrior).y;
+            if(global.team2[i].x - nearestX &lt; 0)
+                dirX = 1;
+            else
+                dirX = -1;
+            if(global.team2[i].y - nearestY &lt; 0)
+                dirY = 1;
+            else
+                dirY = -1;
+            if(abs((global.team2[i].x - nearestX)/global.gridSize) &gt;= global.team2[i].moveRange)
+            {
+                if(!isOccupiedX)
+                    rangeX = global.team2[i].moveRange;
+                else;
+                    rangeY = ceil(random_range(0, 8));
+            }
+            else
+            {
+                if(!isOccupiedX)
+                    rangeX = abs((global.team2[i].x - nearestX)/global.gridSize);
+                else 
+                    rangeX = ceil(random_range(0, 8));
+            }
+            if(abs((global.team2[i].y - nearestY)/global.gridSize) &gt;= global.team2[i].moveRange)
+            {
+                if(!isOccupiedY)
+                    rangeY = global.team2[i].moveRange;
+                else
+                    rangeY = ceil(random_range(0, 8));
+            }
+            else
+            {
+                if(!isOccupiedY)
+                    rangeY = abs((global.team2[i].y - nearestY)/global.gridSize);
+                else 
+                    rangeY = ceil(random_range(0, 8));
+            }
+            //new coordinates snap to grid (48)
+            coorX = (rangeX * global.gridSize);
+            coorY = (rangeY * global.gridSize);
+            for(var j = 0; j &lt; array_length_1d(global.team2); j++) 
+            {
+                if(((global.team2[i].x - coorX ==  global.team2[j].targetX) &amp;&amp;
+                    (global.team2[i].y - coorY == global.team2[j].targetY)) ||
+                    ((global.team2[i].x - coorX == global.team1[j].targetX) &amp;&amp;
+                    (global.team2[i].y - coorY == global.team1[j].targetY)))
+                {
+                    if((global.team2[i].x - coorX ==  global.team2[j].targetX) ||
+                        (global.team2[i].x - coorX == global.team1[j].targetX))
+                    {
+                        isOccupiedX = true;
+                    }
+                    else
+                        isOccupiedX = false;
+                    if((global.team2[i].y - coorY == global.team2[j].targetY) ||
+                        (global.team2[i].y - coorY == global.team1[j].targetY))
+                    {
+                        isOccupiedY = true;
+                    }
+                    else
+                        isOccupiedY = false;
+                }
+                else
+                {
+                    isOccupiedX = false;
+                    isOccupiedY = false;
+                }
+            }
+        } until(!isOccupiedX &amp;&amp; !isOccupiedY);
         //new coordinate = current position + coor
-        global.team2[i].targetX = global.team2[i].x - coorX;
-        global.team2[i].targetY = global.team2[i].y - coorY;
+        global.team2[i].targetX = global.team2[i].x + coorX * dirX;
+        global.team2[i].targetY = global.team2[i].y + coorY * dirY;
+        
     }
     //reset playable team to active
-    for(var i = 0; i &lt; array_length_1d(global.team1); i++){
+    for(i = 0; i &lt; array_length_1d(global.team1); i++){
         global.team1[i].canMove = true;
         global.team1[i].sprite_index = global.team1[i].availableSprite;
     }
