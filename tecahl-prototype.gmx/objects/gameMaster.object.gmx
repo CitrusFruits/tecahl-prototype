@@ -100,8 +100,10 @@ if(moveEnemy){
         k = 0;
         do {
             k++;
+            //get corrdinates of nearest warrioras target
             nearestX = instance_nearest(global.team2[i].x, global.team2[i].y, Warrior).x;
             nearestY = instance_nearest(global.team2[i].x, global.team2[i].y, Warrior).y;
+            //get direction in regards to target
             if(global.team2[i].x - nearestX &lt; 0)
                 dirX = 1;
             else
@@ -110,30 +112,34 @@ if(moveEnemy){
                 dirY = 1;
             else
                 dirY = -1;
+            //if x distance from target is &gt;= moveRange
             if(abs((global.team2[i].x - nearestX)/global.gridSize) &gt;= global.team2[i].moveRange)
             {
-                if(!isOccupiedX)
+                if(!isOccupiedX)    //if x coordinate is already occupied
                     rangeX = global.team2[i].moveRange;
                 else;
                     rangeY = ceil(random_range(0, 8));
             }
+            //if x distance from target is &lt; moveRange
             else
             {
-                if(!isOccupiedX)
+                if(!isOccupiedX)    //if x coordinate is already occupied
                     rangeX = abs((global.team2[i].x - nearestX)/global.gridSize);
                 else 
                     rangeX = ceil(random_range(0, 8));
             }
+            //if y distance from the target is &gt;= moveRange
             if(abs((global.team2[i].y - nearestY)/global.gridSize) &gt;= global.team2[i].moveRange)
             {
-                if(!isOccupiedY)
+                if(!isOccupiedY)    //if y coordinate is already occupied
                     rangeY = global.team2[i].moveRange;
                 else
                     rangeY = ceil(random_range(0, 8));
             }
+            //if y distance from the target is &lt; moveRange
             else
             {
-                if(!isOccupiedY)
+                if(!isOccupiedY)   //if y coordinate is already occupied 
                     rangeY = abs((global.team2[i].y - nearestY)/global.gridSize);
                 else 
                     rangeY = ceil(random_range(0, 8));
@@ -169,11 +175,10 @@ if(moveEnemy){
                     isOccupiedY = false;
                 }
             }
-        } until(!isOccupiedX &amp;&amp; !isOccupiedY);
+        } until(!isOccupiedX &amp;&amp; !isOccupiedY);  //loop until not overlapping
         //new coordinate = current position + coor
         global.team2[i].targetX = global.team2[i].x + coorX * dirX;
         global.team2[i].targetY = global.team2[i].y + coorY * dirY;
-        
     }
     //reset playable team to active
     for(i = 0; i &lt; array_length_1d(global.team1); i++){
