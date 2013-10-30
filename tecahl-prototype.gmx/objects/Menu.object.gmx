@@ -3,7 +3,7 @@
   <spriteName>&lt;undefined&gt;</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>-500</depth>
+  <depth>0</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -28,7 +28,7 @@
             <string>self.hasAddedOptions = false;
 
 //initialize all its options to 0
-self.menuOptionsText = 0;
+self.menuOptions = 0;
 self.menuOption = 0;    //this will probably be filled with scripts or something of the like
 
 
@@ -40,7 +40,7 @@ global.canSelectUnit = false;
         </arguments>
       </action>
     </event>
-    <event eventtype="3" enumb="2">
+    <event eventtype="3" enumb="0">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -58,20 +58,18 @@ global.canSelectUnit = false;
           <argument>
             <kind>1</kind>
             <string>//self.sourceUnit.canMove = false;
+//array_length_1d(self.menuOption)
 if(!self.hasAddedOptions){
-    for(var i = 0; i &lt; array_length_1d(self.menuOptionsText); i++){
+    for(var i = 0; i &lt; array_length_1d(self.menuOptions); i++){
       //drawX, drawY
       var dX = x + global.gridSize; 
       var dY = y + i*self.optionHeight;
-      var option = instance_create(dX, dY, MenuOptionObject);  
-      option.text = self.menuOptionsText[i];
-      
-      //fill out the menu options
+      var option = instance_create(dX, dY, self.menuOptions[i]);
       self.menuOptions[i] = option;
     }
     self.hasAddedOptions = true;
 }
- for(var i = 0; i &lt; array_length_1d(self.menuOptions); i++){
+for(var i = 0; i &lt; array_length_1d(self.menuOptions); i++){
     if(self.menuOptions[i].exitMenu){
         //destroys all instances of MenuOptionObject    
         with (MenuOptionObject) {
@@ -79,7 +77,7 @@ if(!self.hasAddedOptions){
         }
         global.canSelectUnit = true;
         //can't get this to work!
-    //self.sourceUnit.canMove = false;
+        self.sourceUnit.canMove = false;
         
         //destroys this menu
         instance_destroy();
@@ -105,5 +103,8 @@ if(!self.hasAddedOptions){
   <PhysicsObjectFriction>0.200000002980232</PhysicsObjectFriction>
   <PhysicsObjectAwake>-1</PhysicsObjectAwake>
   <PhysicsObjectKinematic>0</PhysicsObjectKinematic>
-  <PhysicsShapePoints/>
+  <PhysicsShapePoints>
+    <point>0,0</point>
+    <point>24,24</point>
+  </PhysicsShapePoints>
 </object>

@@ -11,3 +11,6 @@ var newUnit = instance_create(xIndex*global.gridSize, yIndex*global.gridSize, un
 newUnit.teamNumber = teamNumber;
 global.team[teamNumber, indexOnTeam] = newUnit;
 global.team[teamNumber, indexOnTeam].canMove = true;
+newUnit.health = 2;
+
+return newUnit.id;

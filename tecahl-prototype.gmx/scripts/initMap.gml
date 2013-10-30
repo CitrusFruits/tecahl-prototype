@@ -12,6 +12,7 @@ addUnit(Unit, 1, 2, 0, 2);
 addUnit(Unit, 1, 0, 1, 3);
 addUnit(Unit, 1, 1, 1, 4);
 addUnit(Unit, 1, 2, 1, 5);
+
 global.teamSizes[1] = 6;
 
 addUnit(Enemy, 2, 13, 12, 0);

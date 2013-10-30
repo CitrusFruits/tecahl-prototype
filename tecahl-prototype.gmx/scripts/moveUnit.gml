@@ -16,4 +16,4 @@ argument0.targetX = argument1;
 argument0.targetY = argument2;
 
 //set it so the unit can no longer move
-argument0.canMove = false;
+//argument0.canMove = false;
