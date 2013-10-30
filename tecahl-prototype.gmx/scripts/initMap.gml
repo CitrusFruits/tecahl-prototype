@@ -9,9 +9,9 @@ for(var i = 0; i < global.mapWidth; i++){
 addUnit(Unit, 1, 0, 0, 0);
 addUnit(Unit, 1, 1, 0, 1);
 addUnit(Unit, 1, 2, 0, 2);
-addUnit(Unit, 1, 0, 1, 3);
-addUnit(Unit, 1, 1, 1, 4);
-addUnit(Unit, 1, 2, 1, 5);
+addUnit(Unit, 1, 0, 3, 3);
+addUnit(Unit, 1, 1, 3, 4);
+addUnit(Unit, 1, 2, 3, 5);
 
 global.teamSizes[1] = 6;
 

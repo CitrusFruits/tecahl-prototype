@@ -94,7 +94,7 @@ move_towards_point(self.targetX, self.targetY, min(self.tweenSpeed, distance));
           <argument>
             <kind>1</kind>
             <string>//check if the current selected unit is this unit
-if(global.selectedUnit == self.unitId &amp;&amp; self.canMove){
+if(global.selectedUnit == self.unitId &amp;&amp; self.canMove &amp;&amp; global.canSelectUnit){
 
     //get the grid index
     var gridIndexX = floor(mouse_x/global.gridSize);
@@ -107,8 +107,8 @@ if(global.selectedUnit == self.unitId &amp;&amp; self.canMove){
     if(newX == x &amp;&amp; newY == y)
         exit;
     
-    //check if the move is within range
-    if((abs(gridIndexX-x/global.gridSize) + abs(gridIndexY-y/global.gridSize)) &lt;= self.moveRange &amp;&amp; !isOccupied(gridIndexX, gridIndexY)){
+    //check if the move is valid
+    if(self.mapWithAvailableMoves[gridIndexX, gridIndexY] == 2){
         //move
         moveUnit(self.id, newX, newY);    
         
@@ -116,11 +116,11 @@ if(global.selectedUnit == self.unitId &amp;&amp; self.canMove){
         menu.menuOptions = self.menuOptions;
         menu.sourceUnit = id;
         
-        //self.canMove = false;
+        global.canSelectUnit = false;
     }
     
     //deselect this unit
-    global.selectedUnit = false;
+    deselect();
 }
 </string>
           </argument>
@@ -145,7 +145,7 @@ if(global.selectedUnit == self.unitId &amp;&amp; self.canMove){
           <argument>
             <kind>1</kind>
             <string>//deselect this unit
-global.selectedUnit = false;
+deselect();
 </string>
           </argument>
         </arguments>
@@ -216,10 +216,12 @@ depth = 0;  //sprite depth (bringing it to the front when the mouse is hovering)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>//check the playable team
-if(global.playableTeam == self.teamNumber &amp;&amp; global.canSelectUnit){
+            <string>deselect();
+//check the playable team
+if(global.playableTeam == self.teamNumber &amp;&amp; global.canSelectUnit &amp;&amp; self.canMove){
     //set the selected unit to self
     global.selectedUnit = self.unitId;
+    self.mapWithAvailableMoves = markAvailableSpaces(floor(x/global.gridSize), floor(y/global.gridSize), self.moveRange);
 }
 </string>
           </argument>
