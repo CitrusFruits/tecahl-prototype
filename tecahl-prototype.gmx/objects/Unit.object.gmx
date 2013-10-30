@@ -100,10 +100,9 @@ if(global.selectedUnit == self.unitId &amp;&amp; self.canMove){
         exit;
     
     //check if the move is within range
-    if((abs(gridIndexX-x/global.gridSize) + abs(gridIndexY-y/global.gridSize)) &lt;= self.moveRange){
+    if((abs(gridIndexX-x/global.gridSize) + abs(gridIndexY-y/global.gridSize)) &lt;= self.moveRange &amp;&amp; !isOccupied(gridIndexX, gridIndexY)){
         //move
-        self.targetX = newX;
-        self.targetY = newY;
+        moveUnit(self.id, newX, newY);    
         
         //create the menu
         var menuOptions;
@@ -113,8 +112,7 @@ if(global.selectedUnit == self.unitId &amp;&amp; self.canMove){
         menu.menuOptionsText = menuOptions;
         menu.sourceUnit = self;
         
-        self.canMove = false;
-        //sprite_index = self.exhaustedSprite;
+        //self.canMove = false;
     }
     
     //deselect this unit

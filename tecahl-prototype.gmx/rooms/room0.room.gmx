@@ -51,8 +51,15 @@
   </views>
   <instances>
     <instance objName="cameraController" x="0" y="0" name="inst_3771E7E5" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="globalVars" x="48" y="0" name="inst_554871BE" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="gameMaster" x="96" y="0" name="inst_036DE9F9" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="Building" x="192" y="336" name="inst_C3B1278D" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="Building" x="48" y="336" name="inst_6F53D7C6" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="Building" x="96" y="336" name="inst_764345C3" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="Building" x="144" y="336" name="inst_DCF533BA" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="Building" x="288" y="336" name="inst_661820B6" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="Building" x="0" y="336" name="inst_C13BCF75" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="Building" x="336" y="336" name="inst_3D8F165A" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="Building" x="336" y="336" name="inst_C0C2A485" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
   </instances>
   <tiles>
     <tile bgName="rock_tiles1" x="0" y="0" w="48" h="48" xo="0" yo="0" id="10000001" name="inst_2C1A0556" depth="1000000" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
