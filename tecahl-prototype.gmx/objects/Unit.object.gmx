@@ -34,18 +34,46 @@ self.displayStats = false;  //whether or not to display the stats
 self.tweenSpeed = 10;
 self.targetX = x;
 self.targetY = y;
+self.mapWithAvailableMoves = 0;
+self.mapWithAvailableAttacks = 0;
+self.canAttack = false;
 
 //battle stats
 self.attackPower = 5;
-self.attackRagne = 1;
+self.attackRange = 1;
 self.attackType = Attack;
 self.moveRange = 8;
-self.health = 30;
+//the name health is reserved
+self.healthPoints = 30;
 self.maxHealth = 30;
 
 //create the menu
 self.menuOptions[0] = OptionWait;
 self.menuOptions[1] = OptionAttack;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="3" enumb="2">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if(self.healthPoints &lt;= 0)
+    removeUnit(id);
 </string>
           </argument>
         </arguments>
@@ -76,7 +104,34 @@ move_towards_point(self.targetX, self.targetY, min(self.tweenSpeed, distance));
         </arguments>
       </action>
     </event>
-    <event eventtype="6" enumb="53">
+    <event eventtype="6" enumb="51">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>//deselect this unit
+//destroys all instances of Indicators    
+with (Indicator) {
+     instance_destroy()
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="6" enumb="50">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -108,7 +163,7 @@ if(global.selectedUnit == self.unitId &amp;&amp; self.canMove &amp;&amp; global.
         exit;
     
     //check if the move is valid
-    if(self.mapWithAvailableMoves[gridIndexX, gridIndexY] == 2){
+    if(self.mapWithAvailableMoves[gridIndexX, gridIndexY] == -1){
         //move
         moveUnit(self.id, newX, newY);    
         
@@ -119,33 +174,29 @@ if(global.selectedUnit == self.unitId &amp;&amp; self.canMove &amp;&amp; global.
         global.canSelectUnit = false;
     }
     
-    //deselect this unit
-    deselect();
+    //destroys all instances of Indicators    
+    with (Indicator) {
+         instance_destroy()
+    }
+    //deselct this unit
+    global.selectedUnit = 0;
 }
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="6" enumb="51">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>//deselect this unit
-deselect();
+
+if(self.canAttack){
+    //get the grid index
+    var gridIndexX = floor(mouse_x/global.gridSize);
+    var gridIndexY = floor(mouse_y/global.gridSize);
+     //check if the move is valid
+    if(self.mapWithAvailableAttacks[gridIndexX, gridIndexY] == -1){
+        instance_create(gridIndexX * global.gridSize, gridIndexY*global.gridSize, Attack);        
+        self.canAttack = false;
+        //destroys all instances of Indicators    
+        with (Indicator) {
+             instance_destroy()
+        }
+        global.canSelectUnit = true;
+    }
+}
 </string>
           </argument>
         </arguments>
@@ -216,12 +267,16 @@ depth = 0;  //sprite depth (bringing it to the front when the mouse is hovering)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>deselect();
+            <string>//destroys all instances of Indicators    
+with (Indicator) {
+     instance_destroy()
+}
 //check the playable team
 if(global.playableTeam == self.teamNumber &amp;&amp; global.canSelectUnit &amp;&amp; self.canMove){
     //set the selected unit to self
     global.selectedUnit = self.unitId;
-    self.mapWithAvailableMoves = markAvailableSpaces(floor(x/global.gridSize), floor(y/global.gridSize), self.moveRange);
+    self.mapWithAvailableMoves = getAvailableSpaces(floor(x/global.gridSize), floor(y/global.gridSize), self.moveRange, false);
+    markAvailableSpaces(self.mapWithAvailableMoves, BlueIndicator);
 }
 </string>
           </argument>
@@ -251,7 +306,7 @@ if(self.canMove)
 else
     draw_sprite(self.exhaustedSprite, 0, x, y);
     
-drawHealth(x, y, self.health/self.maxHealth);
+drawHealth(x, y, self.healthPoints/self.maxHealth);
     
 draw_set_font(font_menu);
 if(self.displayStats){

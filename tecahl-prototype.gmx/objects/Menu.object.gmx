@@ -65,6 +65,7 @@ if(!self.hasAddedOptions){
       var dX = x + global.gridSize; 
       var dY = y + i*self.optionHeight;
       var option = instance_create(dX, dY, self.menuOptions[i]);
+      option.sourceUnit = self.sourceUnit;
       self.menuOptions[i] = option;
     }
     self.hasAddedOptions = true;

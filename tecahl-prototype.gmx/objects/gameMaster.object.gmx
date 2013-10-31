@@ -54,8 +54,11 @@ var moveEnemy = true;
 
 //check if all the player's characters have moved
 for(var i = 0; i &lt; global.teamSizes[1]; i++){
-    if(global.team[global.playableTeam, i].canMove)
-        moveEnemy = false;
+    if(global.team[global.playableTeam, i] != 0){
+        if(global.team[global.playableTeam, i].canMove){
+            moveEnemy = false;
+        }
+    }
 }
 var isOccupiedX; //bool if a unit occupies this X coordinate
 var isOccupiedY; //bool if a unit occupies this Y coordinate

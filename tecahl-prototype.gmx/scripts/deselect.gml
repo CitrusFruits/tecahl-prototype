@@ -1,4 +1,4 @@
 //destroys all instances of Indicators    
-with (BlueIndicator) {
+with (Indicator) {
      instance_destroy()
 }

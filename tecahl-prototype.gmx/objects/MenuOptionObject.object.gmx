@@ -28,6 +28,7 @@
             <string>self.mouseHover = false;
 self.exitMenu = false;
 self.text = "Option";
+self.sourceUnit = 0;
 </string>
           </argument>
         </arguments>

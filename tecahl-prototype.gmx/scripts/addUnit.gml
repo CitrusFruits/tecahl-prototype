@@ -9,8 +9,9 @@ global.map[xIndex, yIndex] = unit;
 //push the new unit onto the team
 var newUnit = instance_create(xIndex*global.gridSize, yIndex*global.gridSize, unit);
 newUnit.teamNumber = teamNumber;
+newUnit.indexOnTeam = indexOnTeam;
 global.team[teamNumber, indexOnTeam] = newUnit;
 global.team[teamNumber, indexOnTeam].canMove = true;
-newUnit.health = 2;
+newUnit.healthPoints = 2;
 
 return newUnit.id;

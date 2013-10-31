@@ -42,6 +42,7 @@
             <string>//set the child specific variables
 self.exhaustedSprite = cyborg_desaturated;
 self.availableSprite = cyborg;
+self.attackRange = 4;
 </string>
           </argument>
         </arguments>

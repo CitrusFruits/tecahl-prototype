@@ -7,10 +7,10 @@ for(var i = 0; i < global.mapWidth; i++){
 
 //set up the teams
 addUnit(Unit, 1, 0, 0, 0);
-addUnit(Unit, 1, 1, 0, 1);
+addUnit(Warrior, 1, 1, 0, 1);
 addUnit(Unit, 1, 2, 0, 2);
-addUnit(Unit, 1, 0, 3, 3);
-addUnit(Unit, 1, 1, 3, 4);
+addUnit(Warrior, 1, 0, 3, 3);
+addUnit(Warrior, 1, 1, 3, 4);
 addUnit(Unit, 1, 2, 3, 5);
 
 global.teamSizes[1] = 6;
