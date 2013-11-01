@@ -1,3 +1,7 @@
+/*
+ * Moves the specified unit to the specified point. Also updates
+ * the map. This should be the only way a Unit is moved.
+ */
 var unit = argument0;
 var xIndex = argument1;
 var yIndex = argument2;

@@ -1,4 +1,6 @@
 /*
+ * Returns whether the given space, using indices on the global.map,
+ * is occupied.
  * argument0: xIndex
  * argument1: yIndex
  */

@@ -48,8 +48,8 @@ self.healthPoints = 30;
 self.maxHealth = 30;
 
 //create the menu
-self.menuOptions[0] = OptionWait;
-self.menuOptions[1] = OptionAttack;
+self.menuOptions[0] = OptionAttack;
+self.menuOptions[1] = OptionWait;
 </string>
           </argument>
         </arguments>

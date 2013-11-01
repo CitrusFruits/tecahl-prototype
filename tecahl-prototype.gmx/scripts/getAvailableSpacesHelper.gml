@@ -1,3 +1,8 @@
+/*
+ * A recursive helper function for getAvailableSpaces. Wish I
+ * could make it private. Don't call this one.
+ */
+
 var xPos = argument0;
 var yPos = argument1;
 var range = argument2;
