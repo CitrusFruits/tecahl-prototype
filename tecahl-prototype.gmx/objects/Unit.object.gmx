@@ -41,7 +41,7 @@ self.canAttack = false;
 //battle stats
 self.attackPower = 5;
 self.attackRange = 1;
-self.attackType = Attack;
+self.attackType = BasicAttack;
 self.moveRange = 8;
 //the name health is reserved
 self.healthPoints = 30;
@@ -188,7 +188,9 @@ if(self.canAttack){
     var gridIndexY = floor(mouse_y/global.gridSize);
      //check if the move is valid
     if(self.mapWithAvailableAttacks[gridIndexX, gridIndexY] == -1){
-        instance_create(gridIndexX * global.gridSize, gridIndexY*global.gridSize, Attack);        
+        //create an attack
+        var attack = instance_create(gridIndexX * global.gridSize, gridIndexY*global.gridSize, self.attackType);        
+        attack.sourceUnit = id;
         self.canAttack = false;
         //destroys all instances of Indicators    
         with (Indicator) {
@@ -318,7 +320,7 @@ if(self.displayStats){
     draw_sprite(stats, -100, dx, 24);
     draw_text(dx, 24, "MoveRange: " + string(self.moveRange));
     draw_sprite(stats, -100, dx, 48);
-    draw_text(dx, 48, "Health: " + string(self.health) + "/" + string(self.maxHealth));
+    draw_text(dx, 48, "Health: " + string(self.healthPoints) + "/" + string(self.maxHealth));
 }
 </string>
           </argument>

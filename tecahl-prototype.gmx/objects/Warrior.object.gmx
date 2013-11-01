@@ -43,6 +43,7 @@
 self.exhaustedSprite = cyborg_desaturated;
 self.availableSprite = cyborg;
 self.attackRange = 4;
+self.attackType = Laser;
 </string>
           </argument>
         </arguments>
