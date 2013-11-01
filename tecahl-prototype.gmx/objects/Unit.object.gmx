@@ -308,7 +308,9 @@ if(self.canMove)
 else
     draw_sprite(self.exhaustedSprite, 0, x, y);
     
-drawHealth(x, y, self.healthPoints/self.maxHealth);
+//draw the health
+draw_sprite(health_bg, -10, x, y);
+draw_sprite_part(health_fg, -11, 0, 0, 48*self.healthPoints/self.maxHealth, 10, x, y);
     
 draw_set_font(font_menu);
 if(self.displayStats){

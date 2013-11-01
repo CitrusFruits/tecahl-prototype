@@ -32,7 +32,6 @@
   <scripts name="scripts">
     <script>scripts\moveUnit.gml</script>
     <script>scripts\isOccupied.gml</script>
-    <script>scripts\drawHealth.gml</script>
     <script>scripts\getAvailableSpaces.gml</script>
     <script>scripts\getAvailableSpacesHelper.gml</script>
     <script>scripts\markAvailableSpaces.gml</script>
